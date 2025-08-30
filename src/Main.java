@@ -42,6 +42,21 @@ public class Main extends JPanel {
         new Point3D(1.0f, 1.0f, 1.0f)
     ));
 
+    ArrayList<Edge> edges = new ArrayList<>(Arrays.asList(
+        new Edge(0, 1),
+        new Edge(0, 2),
+        new Edge(0, 3),
+        new Edge(2, 5),
+        new Edge(3, 6),
+        new Edge(3, 4),
+        new Edge(4, 7),
+        new Edge(6, 7),
+        new Edge(7, 5),
+        new Edge(5, 1),
+        new Edge(4, 1),
+        new Edge(2, 6)
+    ));
+
     for (Point3D point : points) {
       System.out.println("x: " + point.x + " y: " + point.y + " z: " + point.z);
     }
