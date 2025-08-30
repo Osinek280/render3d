@@ -83,6 +83,32 @@ public class Main extends JPanel {
         new Edge(2, 6)
     ));
 
+    ArrayList<Triangle> triangles = new ArrayList<>(Arrays.asList(
+        // front face
+        new Triangle(1, 5, 7),
+        new Triangle(1, 7, 4),
+
+        // back face
+        new Triangle(0, 2, 6),
+        new Triangle(0, 6, 3),
+
+        // left face
+        new Triangle(0, 1, 4),
+        new Triangle(0, 4, 3),
+
+        // right face
+        new Triangle(2, 6, 7),
+        new Triangle(2, 7, 5),
+
+        // top face
+        new Triangle(3, 6, 7),
+        new Triangle(3, 7, 4),
+
+        // bottom face
+        new Triangle(0, 2, 5),
+        new Triangle(0, 5, 1)
+    ));
+
     for (Point3D point : points) {
       System.out.println("x: " + point.x + " y: " + point.y + " z: " + point.z);
     }

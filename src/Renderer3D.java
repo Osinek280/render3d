@@ -6,9 +6,7 @@ public class Renderer3D {
   ArrayList<Point3D> points;
   ArrayList<Edge> edges;
 
-  private Main renderer;
-
-  private BufferedImage framebuffer;
+  private final Main renderer;
 
   int WindowSizeX;
 
@@ -24,7 +22,6 @@ public class Renderer3D {
     this.edges = edges;
     this.WindowSizeX = WindowSizeX;
     this.WindowSizeY = WindowSizeY;
-    this.framebuffer = renderer.getFramebuffer();
   }
 
   public void render() {
