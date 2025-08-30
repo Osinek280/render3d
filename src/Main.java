@@ -29,6 +29,33 @@ public class Main extends JPanel {
     }
   }
 
+  public void drawLine(int x0, int y0, int x1, int y1, Color color) {
+    int dx = Math.abs(x1 - x0);
+    int dy = Math.abs(y1 - y0);
+    int sx = x0 < x1 ? 1 : -1;
+    int sy = y0 < y1 ? 1 : -1;
+    int err = dx - dy;
+
+    while (true) {
+      setPixel(x0, y0, color); // rysujemy piksel
+      if (x0 == x1 && y0 == y1) break;
+      int e2 = 2 * err;
+      if (e2 > -dy) {
+        err -= dy;
+        x0 += sx;
+      }
+      if (e2 < dx) {
+        err += dx;
+        y0 += sy;
+      }
+    }
+  }
+
+  public BufferedImage getFramebuffer() {
+    return framebuffer;
+  }
+
+
   public static void main(String[] args) {
 
     ArrayList<Point3D> points = new ArrayList<>(Arrays.asList(
@@ -70,8 +97,11 @@ public class Main extends JPanel {
     frame.setSize(width, height);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
-
     boolean running = true;
+    while (running) {
+      Renderer3D renderer3D = new Renderer3D(renderer, points, edges, width, height);
 
+      renderer3D.render();
+    }
   }
 }

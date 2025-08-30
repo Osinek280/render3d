@@ -1,9 +1,9 @@
 public class Edge {
-  float x;
-  float y;
+  int start;
+  int end;
 
-  public Edge(float x, float y) {
-    this.x = x;
-    this.y = y;
+  public Edge(int x, int y) {
+    this.start = x;
+    this.end = y;
   }
 }
