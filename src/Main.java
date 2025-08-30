@@ -25,7 +25,6 @@ public class Main extends JPanel {
   public void setPixel(int x, int y, Color color) {
     if (x >= 0 && y >= 0 && x < framebuffer.getWidth() && y < framebuffer.getHeight()) {
       framebuffer.setRGB(x, y, color.getRGB());
-      repaint();
     }
   }
 
@@ -98,10 +97,10 @@ public class Main extends JPanel {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
     boolean running = true;
+    Renderer3D renderer3D = new Renderer3D(renderer, points, edges, width, height);
     while (running) {
-      Renderer3D renderer3D = new Renderer3D(renderer, points, edges, width, height);
-
       renderer3D.render();
+      renderer.repaint();
     }
   }
 }

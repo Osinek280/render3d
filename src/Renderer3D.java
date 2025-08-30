@@ -28,13 +28,26 @@ public class Renderer3D {
   }
 
   public void render() {
+
+    long startTime = System.nanoTime();
+
+    Graphics2D g = renderer.getFramebuffer().createGraphics();
+    g.setColor(Color.BLACK);
+    g.fillRect(0, 0, WindowSizeX, WindowSizeY);
+    g.dispose();
+
+    rotation += 1.0f * deltaTime;
+
     for(Edge edge : edges) {
-      Point3D rotatedStartPoint = rotateX(rotateY(points.get(edge.start)));
-      Point3D rotatedEndPoint = rotateX(rotateY(points.get(edge.end)));
+      Point3D rotatedStartPoint = rotateX(points.get(edge.start));
+      Point3D rotatedEndPoint = rotateX(points.get(edge.end));
       Point2D start = projection(rotatedStartPoint);
       Point2D end = projection(rotatedEndPoint);
       renderer.drawLine((int) start.x, (int) start.y, (int) end.x, (int) end.y, Color.WHITE);
     }
+
+    long endTime = System.nanoTime();
+    deltaTime = (endTime - startTime) / 1_000_000_000.0f;
   }
 
   private Point3D rotateX(Point3D point) {
