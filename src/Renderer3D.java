@@ -29,10 +29,30 @@ public class Renderer3D {
 
   public void render() {
     for(Edge edge : edges) {
-      Point2D start = projection(points.get(edge.start));
-      Point2D end = projection(points.get(edge.end));
+      Point3D rotatedStartPoint = rotateX(rotateY(points.get(edge.start)));
+      Point3D rotatedEndPoint = rotateX(rotateY(points.get(edge.end)));
+      Point2D start = projection(rotatedStartPoint);
+      Point2D end = projection(rotatedEndPoint);
       renderer.drawLine((int) start.x, (int) start.y, (int) end.x, (int) end.y, Color.WHITE);
     }
+  }
+
+  private Point3D rotateX(Point3D point) {
+    Point3D returnPoint = new Point3D(
+        point.x,
+        (float) (Math.cos(rotation) * point.y - Math.sin(rotation) * point.z),
+        (float) (Math.sin(rotation) * point.y + Math.cos(rotation) * point.z)
+    );
+    return returnPoint;
+  }
+
+  private Point3D rotateY(Point3D point) {
+    Point3D returnPoint = new Point3D(
+        (float) (Math.cos(rotation) * point.x - Math.sin(rotation) * point.z),
+        point.y,
+        (float) (Math.sin(rotation) * point.x + Math.cos(rotation) * point.z)
+    );
+    return returnPoint;
   }
 
   private Point2D projection(Point3D point) {
