@@ -141,10 +141,15 @@ public class Main extends JPanel {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
     boolean running = true;
-    Renderer3D renderer3D = new Renderer3D(renderer, points, edges, width, height);
+    Renderer3D renderer3D = new Renderer3D(renderer, points, edges, width, height, triangles);
     while (running) {
       renderer3D.render();
       renderer.repaint();
+      try {
+        Thread.sleep(16); // ~60 FPS, jak ci się nie śpieszy to zwiększ
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt(); // bo bez tego to byś był ugotowany
+      }
     }
   }
 }

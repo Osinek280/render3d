@@ -6,6 +6,8 @@ public class Renderer3D {
   ArrayList<Point3D> points;
   ArrayList<Edge> edges;
 
+  ArrayList<Triangle> triangles;
+
   private final Main renderer;
 
   int WindowSizeX;
@@ -16,7 +18,8 @@ public class Renderer3D {
   float FOV = 10.0f;
   float deltaTime = 0.0f;
 
-  public Renderer3D(Main renderer, ArrayList<Point3D> points, ArrayList<Edge> edges, int WindowSizeX, int WindowSizeY) {
+  public Renderer3D(Main renderer, ArrayList<Point3D> points, ArrayList<Edge> edges, int WindowSizeX, int WindowSizeY, ArrayList<Triangle> triangles) {
+    this.triangles = triangles;
     this.renderer = renderer;
     this.points = points;
     this.edges = edges;
@@ -35,13 +38,36 @@ public class Renderer3D {
 
     rotation += 1.0f * deltaTime;
 
+    for (Triangle tri : triangles) {
+      // Bierz punkty z siatki
+      Point3D p0 = rotateY(points.get(tri.a));
+      Point3D p1 = rotateY(points.get(tri.b));
+      Point3D p2 = rotateY(points.get(tri.c));
+
+      // Projektuj do 2D
+      Point2D s0 = projection(p0);
+      Point2D s1 = projection(p1);
+      Point2D s2 = projection(p2);
+
+      // Narysuj trójkąt
+
+      Graphics2D g2 = renderer.getFramebuffer().createGraphics();
+
+      g2.setColor(Color.DARK_GRAY);
+      int[] xPoints = {(int) s0.x, (int) s1.x, (int) s2.x};
+      int[] yPoints = {(int) s0.y, (int) s1.y, (int) s2.y};
+      g2.fillPolygon(xPoints, yPoints, 3);
+      g2.dispose();
+    }
+
     for(Edge edge : edges) {
-      Point3D rotatedStartPoint = rotateX(points.get(edge.start));
-      Point3D rotatedEndPoint = rotateX(points.get(edge.end));
+      Point3D rotatedStartPoint = rotateY(points.get(edge.start));
+      Point3D rotatedEndPoint = rotateY(points.get(edge.end));
       Point2D start = projection(rotatedStartPoint);
       Point2D end = projection(rotatedEndPoint);
       renderer.drawLine((int) start.x, (int) start.y, (int) end.x, (int) end.y, Color.WHITE);
     }
+
 
     long endTime = System.nanoTime();
     deltaTime = (endTime - startTime) / 1_000_000_000.0f;
