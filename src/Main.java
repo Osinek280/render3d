@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -108,6 +109,23 @@ public class Main extends JPanel {
         new Triangle(0, 2, 5),
         new Triangle(0, 5, 1)
     ));
+
+    try {
+      FileLoader.OBJData obj = FileLoader.loadOBJ("untitled.obj");
+
+      System.out.println("Vertices: " + obj.vertices.size());
+      System.out.println("Normals: " + obj.normals.size());
+      System.out.println("TexCoords: " + obj.texcoords.size());
+      System.out.println("Faces: " + obj.faces.size());
+
+//      for(Point3D v: obj.vertices) {
+//        points.add(v);
+//      }
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
 
     for (Point3D point : points) {
       System.out.println("x: " + point.x + " y: " + point.y + " z: " + point.z);
